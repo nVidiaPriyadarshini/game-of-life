@@ -60,4 +60,11 @@ public class Board {
 
         this.board[rowPosition][colPosition] = value;
     }
+
+    public boolean isCellAlive(int rowPosition, int colPosition) {
+
+        int cellValue = this.getCellValue(rowPosition, colPosition);
+
+        return cellValue != 0;
+    }
 }
