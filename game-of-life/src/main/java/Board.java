@@ -1,6 +1,9 @@
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 public class Board {
@@ -35,12 +38,16 @@ public class Board {
      */
     public void printBoard() {
 
+        System.out.println("----Printing board----");
         for (int i = 0; i < this.rowLength; i++) {
             for (int j = 0; j < this.colLength; j++) {
                 System.out.print("\t" + this.board[i][j]);
             }
             System.out.println("");
         }
+        System.out.println("-----End of board-----");
+
+        System.out.println("**********************");
     }
 
     /*
@@ -56,15 +63,69 @@ public class Board {
         return this.board[rowPosition][colPosition];
     }
 
-    public void setCellValue(int rowPosition, int colPosition,int value) {
+    public void setCellValue(int rowPosition, int colPosition, int value) {
 
         this.board[rowPosition][colPosition] = value;
     }
 
     public boolean isCellAlive(int rowPosition, int colPosition) {
 
-        int cellValue = this.getCellValue(rowPosition, colPosition);
+        int cellValue = -1;
+        if (rowPosition >= 0 && rowPosition < this.getRowLength() && colPosition >= 0 && colPosition < this.getColLength()) {
 
+
+            cellValue = this.getCellValue(rowPosition, colPosition);
+        }
         return cellValue != 0;
+    }
+
+    public int getLiveNeighborsCount(int rowPosition, int colPosition) {
+
+        int liveNeighbourCnt = 0;
+
+        List<Cell<Integer, Integer, Boolean>> neighbors = getNeighbors(rowPosition, colPosition);
+        for (Cell neighbourCell : neighbors) {
+            if (((Integer) neighbourCell.getRowPosition() >= 0)
+                    && ((Integer) neighbourCell.getRowPosition() < this.getRowLength())
+                    && ((Integer) neighbourCell.getColPosition() >= 0)
+                    && ((Integer) neighbourCell.getColPosition() < this.getColLength())) {
+                if ((boolean) neighbourCell.getCellState()) {
+                    liveNeighbourCnt++;
+                }
+            }
+        }
+        return liveNeighbourCnt;
+    }
+
+    private List<Cell<Integer, Integer, Boolean>> getNeighbors(int rowPosition, int colPosition) {
+
+        List<Cell<Integer, Integer, Boolean>> neighbourCells = new ArrayList<>();
+
+        Cell neighbourCell = new Cell(rowPosition - 1, colPosition - 1
+                , this.isCellAlive(rowPosition - 1, colPosition - 1));
+        neighbourCells.add(neighbourCell);
+        neighbourCell = new Cell(rowPosition - 1, colPosition
+                , this.isCellAlive(rowPosition - 1, colPosition));
+        neighbourCells.add(neighbourCell);
+        neighbourCell = new Cell(rowPosition - 1, colPosition + 1
+                , this.isCellAlive(rowPosition - 1, colPosition + 1));
+        neighbourCells.add(neighbourCell);
+        neighbourCell = new Cell(rowPosition, colPosition - 1
+                , this.isCellAlive(rowPosition, colPosition - 1));
+        neighbourCells.add(neighbourCell);
+        neighbourCell = new Cell(rowPosition + 1, colPosition - 1
+                , this.isCellAlive(rowPosition + 1, colPosition - 1));
+        neighbourCells.add(neighbourCell);
+        neighbourCell = new Cell(rowPosition + 1, colPosition
+                , this.isCellAlive(rowPosition + 1, colPosition));
+        neighbourCells.add(neighbourCell);
+        neighbourCell = new Cell(rowPosition + 1, colPosition + 1
+                , this.isCellAlive(rowPosition + 1, colPosition + 1));
+        neighbourCells.add(neighbourCell);
+        neighbourCell = new Cell(rowPosition, colPosition + 1
+                , this.isCellAlive(rowPosition, colPosition + 1));
+        neighbourCells.add(neighbourCell);
+
+        return neighbourCells;
     }
 }

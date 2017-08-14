@@ -6,5 +6,7 @@ public class Main {
 
         Board board = GenerateBoard.getBlockBoard();
         board.printBoard();
+
+
     }
 }

@@ -65,6 +65,31 @@ public class BoardTest {
 
     }
 
+    @Test
+    public void testGetLiveNeighboursCountForBlockBoardSeed() {
+        Board board = GenerateBoard.getBlockBoard();
+        board.printBoard();
+
+        assertEquals(3, board.getLiveNeighborsCount(1, 1));
+        assertEquals(3, board.getLiveNeighborsCount(1, 2));
+        assertEquals(3, board.getLiveNeighborsCount(2, 1));
+        assertEquals(3, board.getLiveNeighborsCount(2, 2));
+        assertEquals(1, board.getLiveNeighborsCount(0, 0));
+        assertEquals(2, board.getLiveNeighborsCount(0, 1));
+        assertEquals(2, board.getLiveNeighborsCount(0, 2));
+        assertEquals(1, board.getLiveNeighborsCount(0, 3));
+        assertEquals(2, board.getLiveNeighborsCount(1, 0));
+        assertEquals(2, board.getLiveNeighborsCount(1, 3));
+        assertEquals(2, board.getLiveNeighborsCount(2, 0));
+        assertEquals(2, board.getLiveNeighborsCount(2, 3));
+        assertEquals(1, board.getLiveNeighborsCount(3, 0));
+        assertEquals(2, board.getLiveNeighborsCount(3, 1));
+        assertEquals(2, board.getLiveNeighborsCount(3, 2));
+        assertEquals(1, board.getLiveNeighborsCount(3, 3));
+
+
+    }
+
     private void checkCellsArePopulated(Board board) {
 
         for (int i = 0; i < board.getRowLength(); i++) {
