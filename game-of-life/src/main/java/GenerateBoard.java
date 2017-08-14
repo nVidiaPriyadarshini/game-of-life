@@ -6,7 +6,13 @@ public class GenerateBoard {
     public static Board getBlockBoard() {
 
         board = new Board(4, 4);
+        board.initializeBoard();
         return initializeBlockBoard(board);
+    }
+
+    public static Board getBlinkerBoard() {
+        board = new Board(5, 5);
+        return initializeBlinkerBoard(board);
     }
 
     private static Board initializeBlockBoard(Board board) {
@@ -23,6 +29,15 @@ public class GenerateBoard {
         board.setCellValue(1, 2, 1);
         board.setCellValue(2, 1, 1);
         board.setCellValue(2, 2, 1);
+        return board;
+    }
+
+    private static Board initializeBlinkerBoard(Board board) {
+
+
+        board.setCellValue(1, 2, 1);
+        board.setCellValue(2, 2, 1);
+        board.setCellValue(3, 2, 1);
         return board;
     }
 }

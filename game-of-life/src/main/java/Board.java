@@ -1,17 +1,17 @@
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.SerializationUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-public class Board {
+public class Board implements Serializable {
 
     private int[][] board;
 
-    @Getter
-    @Setter
     private int rowLength, colLength;
 
 
@@ -21,13 +21,19 @@ public class Board {
         this.board = new int[rowLength][colLength];
     }
 
+    @Override
+    public Board clone() {
+        Board copyOfBoard = SerializationUtils.clone(this);
+        return copyOfBoard;
+    }
+
     /*
-     Set the initial state of the board
+     Set the initial state of the board to all 0
      */
     public int[][] initializeBoard() {
         for (int i = 0; i < this.rowLength; i++) {
             for (int j = 0; j < this.colLength; j++) {
-                this.board[i][j] = getRandomCellValue();
+                this.board[i][j] = 0;
             }
         }
         return this.board;
@@ -82,7 +88,6 @@ public class Board {
     public int getLiveNeighborsCount(int rowPosition, int colPosition) {
 
         int liveNeighbourCnt = 0;
-
         List<Cell<Integer, Integer, Boolean>> neighbors = getNeighbors(rowPosition, colPosition);
         for (Cell neighbourCell : neighbors) {
             if (((Integer) neighbourCell.getRowPosition() >= 0)
@@ -95,6 +100,12 @@ public class Board {
             }
         }
         return liveNeighbourCnt;
+    }
+
+    public Cell<Integer, Integer, Boolean> getCell(int rowPosition, int colPosition) {
+
+        return new Cell<>(rowPosition, colPosition, this.isCellAlive(rowPosition, colPosition));
+
     }
 
     private List<Cell<Integer, Integer, Boolean>> getNeighbors(int rowPosition, int colPosition) {
