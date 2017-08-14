@@ -1,16 +1,15 @@
 
 public class Main {
-
     public static void main(String[] args) {
 
 
-        Board board = GenerateBoard.getBlockBoard();
+        Board board = GenerateBoard.getBlinkerBoard();
         board.printBoard();
-        Board newBoard = board.clone();
-        newBoard.printBoard();
-        newBoard.setCellValue(0, 0, 1);
-        board.printBoard();
-        newBoard.printBoard();
-
+        Board nextStateOfBoard;
+        for (int count = 0; count < 10; count++) {
+            nextStateOfBoard = LifeCycle.getNextStateOfBoard(board);
+            nextStateOfBoard.printBoard();
+            board = nextStateOfBoard.clone();
+        }
     }
 }

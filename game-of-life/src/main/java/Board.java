@@ -14,6 +14,9 @@ public class Board implements Serializable {
 
     private int rowLength, colLength;
 
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_GREEN = "\u001B[32m";
 
     public Board(int rowLength, int colLength) {
         this.rowLength = rowLength;
@@ -47,7 +50,12 @@ public class Board implements Serializable {
         System.out.println("----Printing board----");
         for (int i = 0; i < this.rowLength; i++) {
             for (int j = 0; j < this.colLength; j++) {
-                System.out.print("\t" + this.board[i][j]);
+                if(this.board[i][j]==0) {
+                    System.out.print("\t" + ANSI_RED + this.board[i][j]+ ANSI_RESET);
+                } else if(this.board[i][j]==1) {
+                    System.out.print("\t" + ANSI_GREEN + this.board[i][j]+ ANSI_RESET);
+
+                }
             }
             System.out.println("");
         }

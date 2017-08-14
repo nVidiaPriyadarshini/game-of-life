@@ -129,6 +129,8 @@ public class BoardTest {
         nextStateOfBoard1.printBoard();
         Board lastStateChangeTest = LifeCycle.getNextStateOfBoard(nextStateOfBoard1);
         lastStateChangeTest.printBoard();
+        Board nextStateOfBoard2 = LifeCycle.getNextStateOfBoard(lastStateChangeTest);
+        nextStateOfBoard2.printBoard();
     }
 
     @Test
