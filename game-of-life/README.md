@@ -2,7 +2,7 @@
 
 Conway's Game of Life Solution In Java
 
-According to the Wikipedia's article: "The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970."
+According to the Wikipedia's article: "The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970." https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 
 Given a board with rowLength by colLength cells, each cell has an initial state live (1) or dead (0). Each cell interacts with its eight neighbors (horizontal, vertical, diagonal) using the following four rules (taken from the above Wikipedia article):
 
