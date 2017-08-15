@@ -1,15 +1,18 @@
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
 
         Board board = GenerateBoard.getBlinkerBoard();
         board.printBoard();
-        Board nextStateOfBoard;
-        for (int count = 0; count < 10; count++) {
-            nextStateOfBoard = LifeCycle.getNextStateOfBoard(board);
-            nextStateOfBoard.printBoard();
-            board = nextStateOfBoard.clone();
-        }
+        board.constructHeatMap("game-of-life-heat-chart.png");
+
+        Board nextStateOfBoard = LifeCycle.getNextStateOfBoard(board);
+        nextStateOfBoard.printBoard();
+        nextStateOfBoard.constructHeatMap("game-of-life-heat-chart1.png");
+
     }
+
+
 }

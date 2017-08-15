@@ -1,12 +1,16 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class BoardTest {
 
     private Board board;
+    private static final String HEAT_CHART_TITLE = "test-Heat-Chart.png";
 
     @Before
     public void setUp() {
@@ -28,7 +32,7 @@ public class BoardTest {
         board.initializeBoard();
         System.out.println("Before setting cell value");
         board.printBoard();
-        int cellValue = board.getCellValue(1, 1);
+        Double cellValue = board.getCellValue(1, 1);
         System.out.println("After setting cell value");
         if (cellValue == 1) {
             board.setCellValue(1, 1, 0);
@@ -131,6 +135,16 @@ public class BoardTest {
         lastStateChangeTest.printBoard();
         Board nextStateOfBoard2 = LifeCycle.getNextStateOfBoard(lastStateChangeTest);
         nextStateOfBoard2.printBoard();
+    }
+
+    @Test
+    public void testHeatChartIsGenerated() throws IOException {
+        Board board = GenerateBoard.getBlinkerBoard();
+        board.constructHeatMap(HEAT_CHART_TITLE);
+        File file = new File(HEAT_CHART_TITLE);
+        assertTrue(file.exists());
+        assertTrue(!file.isDirectory());
+        assertTrue(file.delete());
     }
 
     @Test
