@@ -1,13 +1,8 @@
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.SerializationUtils;
-import org.tc33.jheatchart.HeatChart;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +10,7 @@ import java.util.List;
 @Setter
 public class Board implements Serializable {
 
-    private double[][] board;
+    private Cell[][] cells;
 
     private int rowLength, colLength;
 
@@ -26,7 +21,7 @@ public class Board implements Serializable {
     public Board(int rowLength, int colLength) {
         this.rowLength = rowLength;
         this.colLength = colLength;
-        this.board = new double[rowLength][colLength];
+        this.cells = new Cell[rowLength][colLength];
     }
 
     @Override
@@ -38,24 +33,13 @@ public class Board implements Serializable {
     /*
      Set the initial state of the board to all 0
      */
-    public double[][] initializeBoard() {
+    public Cell[][] initializeBoard() {
         for (int i = 0; i < this.rowLength; i++) {
             for (int j = 0; j < this.colLength; j++) {
-                this.board[i][j] = 0;
+                this.cells[i][j] = new Cell(i, j, 0);
             }
         }
-        return this.board;
-    }
-
-    public void constructHeatMap(String fileName) throws IOException {
-        HeatChart heatChart = new HeatChart(this.board);
-        heatChart.setTitle("Game of Life");
-        heatChart.setHighValueColour(Color.green);
-        heatChart.setLowValueColour(Color.red);
-        heatChart.setShowXAxisValues(false);
-        heatChart.setShowYAxisValues(false);
-        heatChart.saveToFile(new File(fileName));
-
+        return this.cells;
     }
 
     /*
@@ -66,11 +50,11 @@ public class Board implements Serializable {
         System.out.println("----Printing board----");
         for (int i = 0; i < this.rowLength; i++) {
             for (int j = 0; j < this.colLength; j++) {
-                String formattedValue = new DecimalFormat("#").format(this.board[i][j]);
-                if (this.board[i][j] == 0) {
-                    System.out.print("\t" + ANSI_RED + formattedValue + ANSI_RESET);
-                } else if (this.board[i][j] == 1) {
-                    System.out.print("\t" + ANSI_GREEN + formattedValue + ANSI_RESET);
+                String cellState = this.cells[i][j].getCellState().toString();
+                if (cellState.equals("0")) {
+                    System.out.print("\t" + ANSI_RED + cellState + ANSI_RESET);
+                } else if (cellState.equals("1")) {
+                    System.out.print("\t" + ANSI_GREEN + cellState + ANSI_RESET);
 
                 }
             }
@@ -81,27 +65,21 @@ public class Board implements Serializable {
         System.out.println("**********************");
     }
 
-    /*
-     Generate a random cell value in the board
-     */
-    private int getRandomCellValue() {
-        boolean value = Math.random() < 0.5;
-        return (value) ? 1 : 0;
-    }
 
-    public double getCellValue(int rowPosition, int colPosition) {
+    public int getCellValue(int rowPosition, int colPosition) {
 
-        return this.board[rowPosition][colPosition];
+        return (Integer) this.cells[rowPosition][colPosition].getCellState();
     }
 
     public void setCellValue(int rowPosition, int colPosition, int value) {
 
-        this.board[rowPosition][colPosition] = value;
+        Cell cell = new Cell(rowPosition, colPosition, value);
+        this.cells[rowPosition][colPosition] = cell;
     }
 
     public boolean isCellAlive(int rowPosition, int colPosition) {
 
-        double cellValue = -1;
+        int cellValue = -1;
         if (rowPosition >= 0 && rowPosition < this.getRowLength() && colPosition >= 0 && colPosition < this.getColLength()) {
 
 

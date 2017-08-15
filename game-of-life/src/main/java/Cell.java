@@ -1,9 +1,12 @@
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.SerializationUtils;
+
+import java.io.Serializable;
 
 @Getter
 @Setter
-public class Cell<T, U, V> {
+public class Cell<T, U, V> implements Serializable {
 
     private final T rowPosition;
     private final U colPosition;
@@ -15,5 +18,10 @@ public class Cell<T, U, V> {
         this.cellState = cellState;
     }
 
+    @Override
+    public Cell clone() {
+        Cell copyOfCell = SerializationUtils.clone(this);
+        return copyOfCell;
+    }
 
 }
