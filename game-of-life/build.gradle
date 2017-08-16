@@ -22,7 +22,7 @@ apply plugin: "com.github.johnrengelman.shadow"
 
 sourceCompatibility = 1.8
 
-mainClassName = "launch.Main"
+mainClassName = "Main"
 repositories {
     mavenCentral()
     maven {
