@@ -1,4 +1,4 @@
-# game-of-life
+# Game-of-Life
 
 Conway's Game of Life Solution In Java
 
@@ -28,6 +28,6 @@ BLOCK,BEEHIVE,LOAF,BOAT,TUB,BLINKER,TOAD,BEACON,PULSAR,GLIDER,LWSS, RANDOM
 Enter number of iterations
 <Enter number of stages of Lifecycle you would like to see><PRESS ENTER>
 
-The various stages of patterns will get printed in the console
+The various stages of patterns will get printed in the console.
 
 
